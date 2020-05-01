@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import ControlsLayout from './components/ControlsLayout';
+import UsersList from './components/UsersList';
+import Loader from './components/Loader';
+import { connect } from 'react-redux';
+import { fetchUsersData } from './redux/actions';
 
-function App() {
+const Wrapper = styled.div`
+  width: 70%;
+  margin: 0 auto;
+  padding: 30px;
+  padding-bottom: 0;
+`;
+
+const App = ({ getUsersData, usersData }) => {
+  useEffect(() => {
+    getUsersData();
+  }, [getUsersData]);
+
+  const usersList = usersData ? <UsersList /> : <Loader/>;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper>
+      <ControlsLayout />
+      { usersList }
+    </Wrapper>
   );
 }
+const MSTP = (state) => {
+  return {
+    usersData: state.usersData
+  }
+}
+const MATP = (dispatch) => {
+  return {
+    getUsersData: (usersData) => dispatch(fetchUsersData(usersData))
+  }
+}
 
-export default App;
+export default connect(MSTP, MATP)(App);
