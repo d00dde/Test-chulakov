@@ -24,11 +24,3 @@ export default () => {
 	)
 }
 
-/*const MSTP = (state) => {
-	return {
-		data: state.modifiedData,
-		viewType: state.viewType
-	}
-}
-
-export default connect(MSTP, null)(UsersList);*/

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ControlsLayout from './components/ControlsLayout';
 import UsersList from './components/UsersList';
 import Loader from './components/Loader';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { fetchUsersData } from './redux/actions';
 
 const Wrapper = styled.div`
@@ -13,10 +13,15 @@ const Wrapper = styled.div`
   padding-bottom: 0;
 `;
 
-const App = ({ getUsersData, usersData }) => {
+export default () => {
+  const { usersData } = useSelector ((state) => {
+    return { usersData: state.usersData };
+  });
+  const dispatch = useDispatch();
+  
   useEffect(() => {
-    getUsersData();
-  }, [getUsersData]);
+    dispatch(fetchUsersData(usersData));
+  }, [dispatch, usersData]);
 
   const usersList = usersData ? <UsersList /> : <Loader/>;
 
@@ -27,15 +32,3 @@ const App = ({ getUsersData, usersData }) => {
     </Wrapper>
   );
 }
-const MSTP = (state) => {
-  return {
-    usersData: state.usersData
-  }
-}
-const MATP = (dispatch) => {
-  return {
-    getUsersData: (usersData) => dispatch(fetchUsersData(usersData))
-  }
-}
-
-export default connect(MSTP, MATP)(App);

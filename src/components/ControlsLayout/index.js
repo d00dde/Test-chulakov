@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import RadioBlock from '../RadioBlock';
 import NameFilter from '../NameFilter';
@@ -20,7 +20,11 @@ const Title = styled.div`
 
 `;
 
-const ControlsLayout = ({ language }) => {
+export default () => {
+	const { language } = useSelector((state) => {
+	 return { language: state.language.ControlsLayout };
+	});
+
 	return (
 		<Wrapper>
 			<LeftWrapper>
@@ -37,10 +41,3 @@ const ControlsLayout = ({ language }) => {
 		</Wrapper>
 	);
 }
-const MSTP = (state) => {
-	return {
-    language: state.language.ControlsLayout
-  }
-}
-
-export default connect(MSTP)(ControlsLayout);
