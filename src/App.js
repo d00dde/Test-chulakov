@@ -1,34 +1,26 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
+import { Container } from 'react-bootstrap';
 import ControlsLayout from './components/ControlsLayout';
 import UsersList from './components/UsersList';
 import Loader from './components/Loader';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUsersData } from './redux/actions';
-
-const Wrapper = styled.div`
-  width: 70%;
-  margin: 0 auto;
-  padding: 30px;
-  padding-bottom: 0;
-`;
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 export default () => {
-  const { usersData } = useSelector ((state) => {
-    return { usersData: state.usersData };
-  });
+  const { isUsersData } = useSelector ((state) => ({ isUsersData: !!state.usersData }));
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
-    dispatch(fetchUsersData(usersData));
-  }, [dispatch, usersData]);
+    dispatch(fetchUsersData());
+  }, [dispatch]);
 
-  const usersList = usersData ? <UsersList /> : <Loader/>;
-
+  const usersList = isUsersData ? <UsersList /> : <Loader/>;
   return (
-    <Wrapper>
+    <Container>
       <ControlsLayout />
       { usersList }
-    </Wrapper>
+    </Container>
   );
 }

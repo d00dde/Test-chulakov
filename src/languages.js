@@ -5,8 +5,8 @@ export const rus = {
 	},
 	SortByFieldsSwitch: {
 		id: 'ID',
-		name: 'Имя',
-		age: 'Возраст'
+		name: 'Имени',
+		age: 'Возрасту'
 	},
 	SortDirectionSwitch: {
 		forward: 'Возростанию',
@@ -18,6 +18,11 @@ export const rus = {
 	},
 	NameFilter: {
 		placeholder: 'Введите имя или фамилию'
+	},
+	UsersList: {
+		age_1: 'год',
+		age_2: 'года',
+		age_3: 'лет'
 	}
 }
 export const eng = {
@@ -40,5 +45,10 @@ export const eng = {
 	},
 	NameFilter: {
 		placeholder: 'Enter name or surname'
+	},
+	UsersList: {
+		age_1: 'year',
+		age_2: 'years',
+		age_3: 'years'
 	}
 }

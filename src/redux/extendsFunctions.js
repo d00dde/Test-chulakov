@@ -1,4 +1,4 @@
-const setBrowserPath = ({ sortByField, sortDirection, viewType, filterValue }) => {
+ export const setBrowserPath = ({ sortByField, sortDirection, viewType, filterValue }) => {
 	/*if(window.location.pathname === '/') TODO: controls change did push in browser history
 		window.history.back();*/
 	window.history.replaceState(
@@ -8,16 +8,16 @@ const setBrowserPath = ({ sortByField, sortDirection, viewType, filterValue }) =
 	);
 }
 
-export const filterAndSortUsers = (state) => { //TODO: no filter with change view call
-	setBrowserPath(state);
+export const filterAndSortUsers = (state) => {
 	const { usersData, sortByField, sortDirection, filterValue } = state;
 	let forModificate = [...usersData];
-	if(filterValue){
+	const normalizedFilterValue = filterValue.trim().toLowerCase();
+	if(normalizedFilterValue){
 			forModificate = forModificate.filter(({ name }) => {
 				const [firstname, surname] = name.toLowerCase().split(' ');
-				if(firstname.includes(filterValue))
+				if(firstname.includes(normalizedFilterValue))
 					return true;
-				if(surname.includes(filterValue))
+				if(surname.includes(normalizedFilterValue))
 					return true;
 				return false;
 			});

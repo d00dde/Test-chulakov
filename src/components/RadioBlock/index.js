@@ -1,31 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { radioChange } from '../../redux/actions';
-
-const Wrapper = styled.div`
-	width: 50%;
-	display: flex;
-`;
-
-const RadioButton = styled.div`
-width: 50%;
-border: 1px solid black;
-cursor: pointer;
-&.active {
-	background-color: red;
-	cursor: default;
-}
-`;
+import { ButtonGroup, Button } from 'react-bootstrap';
 
 export default ({ langField, fieldName }) => {
-	const { activeValue, fields } = useSelector((state) => {
-		return {
+	const { activeValue, fields } = useSelector((state) => ({
 			activeValue: state[fieldName],
 			fields: state.language[langField]
-		}
-	});
+		}));
 	const dispatch = useDispatch();
+
 	const setActiveValue = (fieldName, fieldValue) => dispatch(radioChange(fieldName, fieldValue));
 	const options = [];
 	for(let key in fields){
@@ -38,30 +22,20 @@ export default ({ langField, fieldName }) => {
 	};
 
 	const buttonsList = options.map(({ title, value }) => (
-		<RadioButton
+		<Button
 			key={value}
 			data-sort={value}
-			className={activeValue === value ? 'active' : null}
+			active={activeValue === value ? 'active' : null}
+			size="lg"
+			className="mb-2"
 			onClick={chooseButton}
 		>
 			{title}
-		</RadioButton>
+		</Button>
 		));
 	return (
-		<Wrapper >
+		<ButtonGroup size="lg" className="mb-2" style={{width: '100%'}}>
 			{buttonsList}
-		</Wrapper>
+		</ButtonGroup>
 	)
 }
-
-/*const MSTP = (state) => {
-	return { state };
-}
-
-const MATP = (dispatch) => {
-	return {
-		setActiveValue: (fieldName, fieldValue) => dispatch(radioChange(fieldName, fieldValue))
-	}
-}
-
-export default connect(MSTP, MATP)(RadioBlock);*/

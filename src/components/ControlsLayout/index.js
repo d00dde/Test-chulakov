@@ -1,43 +1,27 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import { Row, Col } from 'react-bootstrap';
 
 import RadioBlock from '../RadioBlock';
 import NameFilter from '../NameFilter';
 import LanguageSwitch from '../LanguageSwitch';
 
-const Wrapper = styled.div`
-	width: 100%;
-	display: flex;
-`;
-const LeftWrapper = styled.div`
-	width: 50%;
-`;
-const RightWrapper = styled.div`
-	width: 50%;
-`;
-const Title = styled.div`
-
-`;
-
 export default () => {
-	const { language } = useSelector((state) => {
-	 return { language: state.language.ControlsLayout };
-	});
-
+	const { language } = useSelector((state) => ({language: state.language.ControlsLayout }));
 	return (
-		<Wrapper>
-			<LeftWrapper>
-				<Title>{language.sortBy}</Title>
+		<Row>
+			<Col md={5}>
+				<h3>{language.sortBy}</h3>
 				<RadioBlock  fieldName='sortByField' langField='SortByFieldsSwitch'/>
 				<RadioBlock  fieldName='sortDirection' langField='SortDirectionSwitch'/>
 				<NameFilter />
-			</LeftWrapper>
-			<RightWrapper>
-				<Title>{language.view}</Title>
+			</Col>
+			<Col md={1}></Col>
+			<Col md={5}>
+				<h3>{language.view}</h3>
 				<RadioBlock  fieldName='viewType' langField='ViewSwitch'/>
 				<LanguageSwitch />
-			</RightWrapper>
-		</Wrapper>
+			</Col>
+		</Row>
 	);
 }

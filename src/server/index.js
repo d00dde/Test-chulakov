@@ -1,5 +1,5 @@
 import data from './data.json';
-const SERVER_DELAY = 500;
+const SERVER_DELAY = 200;
 
 export default {
 	getData: async () => {
