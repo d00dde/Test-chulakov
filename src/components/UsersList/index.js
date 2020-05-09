@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import TableItem from './TableItem';
 import PreviewItem from './PreviewItem';
@@ -39,9 +39,7 @@ export default () => {
 	const favouriteHandler = (id) => {
 		dispatch(changeFavourite(id));
 	}
-	const playVideoHandler = (videoNode) => {
-		//videoObserver.setPlayedVideoHandler(videoNode);
-	}
+
 	const ageCaption = (age) => {
 		const decades = Math.floor(age/10);
 		const years = age%10;
@@ -54,19 +52,17 @@ export default () => {
 		return language.age_3;
 	}
 	const ViewItem = viewType === 'table' ? TableItem : PreviewItem;
-	console.log('in users list')
-	const usersList = data.map((user) => (
-		<ViewItem
+
+	const usersList = useMemo (() => data.map((user) => {
+		return (<ViewItem
 			key={user.id}
 			user={user}
 			ageCaption={ageCaption(user.age)}
 			favouriteHandler={favouriteHandler}
-			playVideoHandler={playVideoHandler}
 		/>
-	));
+	)}), [data, ViewItem]);
 
 	useEffect(() => {
-		console.log('in effect');
 		listObserver.observeList();
 		videoObserver.observeVideos();
 	}, [data]);

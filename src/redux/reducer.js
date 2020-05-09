@@ -46,12 +46,11 @@ export const reducer = (state = initState(), action) => {
 			};
 			case types.CHANGE_FAVOURITE:
 			const redactData = (data) => {
-				data.forEach((user, index) => {
+				return data.map((user) => {
 					if(user.id !== action.payload)
-						return;
-					data[index] = {...user, favourite: !user.favourite}
+						return user
+					return {...user, favourite: !user.favourite}
 				});
-				return data;
 			}
 			return {
 				...state,

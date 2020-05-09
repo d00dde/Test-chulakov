@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export const useListObserver = (parentId, classIntersection) => {
 	const [ observer ] = useState(() => {
@@ -29,50 +29,48 @@ export const useListObserver = (parentId, classIntersection) => {
 }
 
 export const useVideoObserver = (parentId) => {
-	const [ player, setPlayer ] = useState({
-		needStop: null,
-		played: null
-	});
-
-	useEffect(() => {
-		//console.log(player)
-		if(player.needStop)
-			player.needStop.pause();
-		if(player.played)
-			player.played.play();
-	}, [player]);
+	const [ videos, setVideos ] = useState([]);
+	console.log(videos)
+	const stopOthersVideos = (playedVideo) => {
+		console.log(videos)
+		videos.forEach((video) => {
+			if(video === playedVideo)
+				return;
+			if(!video.paused)
+				video.pause();
+		});
+	}
 
 	const [ observer ] = useState(() => {
 		return new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
-				if(!entry.isIntersecting)
-					return
-				console.log(entry)
-				setPlayer((prevState) => ({
-					needStop: prevState.played ? prevState.played : null,
-					played: entry.isIntersecting ? entry.target : null
-				}));
+				if(entry.isIntersecting)
+					entry.target.play();
+				else
+				entry.target.pause();
 			});
-		},{
+		}, {
 			rootMargin: '-45% 0% -45% 0%',
 			threshold: 0
 		});
 	});
+
 	const observeVideos = () => {
+		const currentVideos = [];
 		document.getElementById(parentId).childNodes.forEach((node) => {
 			if(!node.childNodes[1])
 				return;
 			if(node.childNodes[1].childNodes[0].tagName === 'VIDEO'){
-				observer.observe(node.childNodes[1].childNodes[0]);
+				const video = node.childNodes[1].childNodes[0];
+				observer.observe(video);
+				video.onplay = (video) => stopOthersVideos(video);
+				currentVideos.push(video);
 			}
 		});
-	}
-	const setPlayedVideoHandler = (video) => {
-
+		setVideos(currentVideos);
 	}
 
 	return {
 		observeVideos,
-		setPlayedVideoHandler
 	}
 }

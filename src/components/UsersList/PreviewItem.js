@@ -88,9 +88,9 @@ const Video = styled.div`
 	}
 `;
 
-const UserVideo = ({ video, id, playVideoHandler }) => (
+const UserVideo = ({ video, id }) => (
 	<Video data-id={id} className='video-wrapper'>
-		<video controls={true} onPlay={(e) => playVideoHandler(e.target)}>
+		<video controls={true} >
 			<source src={`/videos/${video}.mp4`}></source>
 		</video>
 	</Video>
@@ -99,8 +99,7 @@ const UserVideo = ({ video, id, playVideoHandler }) => (
 export default ({
 	user : { id, favourite, name, age, phone, image, phrase, video },
 	ageCaption,
-	favouriteHandler,
-	playVideoHandler
+	favouriteHandler
 }) => {
 	return(
 		<Card key={id} video={!!video}>
@@ -120,7 +119,7 @@ export default ({
 				<Row>{phone}</Row>
 				<Phrase>{phrase}</Phrase>
 			</Left>
-			{video ? <UserVideo video={video} id={id} playVideoHandler={playVideoHandler}/> : null}
+			{video ? <UserVideo video={video} id={id} /> : null}
 		</Card>
 	)
 }
