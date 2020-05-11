@@ -5,17 +5,21 @@ import options from '../options';
 
 const initState = () => {
 	const { sortByFields, sortDirection, viewType } = options;
-	const isPathExist = window.location.pathname !== '/';
-	const parts = window.location.pathname.split('/');  //Неустойчиво к ошибкам в редактировании адресной строки
+	const splitPath = window.location.pathname.split('/');
+	const part_1 = splitPath[3];
+	const part_2 = splitPath[4];
+	const part_3 = splitPath[5];
+	const part_4 = splitPath[6];
+
 	return {
 		usersData: null,
 		modifiedData: null,
 		error: null,
 		language: rus,
-		sortByField: isPathExist ? (sortByFields.includes(parts[1]) ?  parts[1] : sortByFields[0]) : sortByFields[0],
-		sortDirection: isPathExist ? (sortDirection.includes(parts[1]) ?  parts[1] : sortDirection[0]) : sortDirection[0],
-		filterValue: isPathExist ? parts[4] : '',
-		viewType: isPathExist ?  (viewType.includes(parts[1]) ?  parts[1] : viewType[0]) : viewType[0],
+		sortByFields: sortByFields.includes(part_1) ?  part_1 : sortByFields[0],
+		sortDirection: sortDirection.includes(part_2) ?  part_2 : sortDirection[0],
+		viewType: viewType.includes(part_3) ? part_3 : viewType[0],
+		filterValue: part_4 ? part_4 : ''
 	}
 }
 
