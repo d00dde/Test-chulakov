@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Test-chulakov/static/css/main.8b58510b.chunk.css",
+    "main.js": "/Test-chulakov/static/js/main.eb922808.chunk.js",
+    "main.js.map": "/Test-chulakov/static/js/main.eb922808.chunk.js.map",
+    "runtime-main.js": "/Test-chulakov/static/js/runtime-main.a6792835.js",
+    "runtime-main.js.map": "/Test-chulakov/static/js/runtime-main.a6792835.js.map",
+    "static/css/2.69121389.chunk.css": "/Test-chulakov/static/css/2.69121389.chunk.css",
+    "static/js/2.36839544.chunk.js": "/Test-chulakov/static/js/2.36839544.chunk.js",
+    "static/js/2.36839544.chunk.js.map": "/Test-chulakov/static/js/2.36839544.chunk.js.map",
+    "index.html": "/Test-chulakov/index.html",
+    "precache-manifest.da58012ca81682b3d8676b1eb36aead1.js": "/Test-chulakov/precache-manifest.da58012ca81682b3d8676b1eb36aead1.js",
+    "service-worker.js": "/Test-chulakov/service-worker.js",
+    "static/css/2.69121389.chunk.css.map": "/Test-chulakov/static/css/2.69121389.chunk.css.map",
+    "static/css/main.8b58510b.chunk.css.map": "/Test-chulakov/static/css/main.8b58510b.chunk.css.map",
+    "static/js/2.36839544.chunk.js.LICENSE.txt": "/Test-chulakov/static/js/2.36839544.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a6792835.js",
+    "static/css/2.69121389.chunk.css",
+    "static/js/2.36839544.chunk.js",
+    "static/css/main.8b58510b.chunk.css",
+    "static/js/main.eb922808.chunk.js"
+  ]
+}

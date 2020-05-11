@@ -2,6 +2,7 @@
 
 # settings
 /.vscode
+/no_deploy
 
 # dependencies
 /node_modules
