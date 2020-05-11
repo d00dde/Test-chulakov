@@ -27,8 +27,9 @@ const Wrapper = styled.div`
 `;
 
 export default () => {
-	const listObserver = useListObserver('users-list', 'bounceInRight');
-	const videoObserver = useVideoObserver('users-list');
+	const  { observeList } = useListObserver('users-list', 'bounceInRight');
+	const { observeVideos } = useVideoObserver('users-list');
+
 	const { data, viewType, language } = useSelector((state) => ({
 			data: state.modifiedData,
 			viewType: state.viewType,
@@ -53,19 +54,19 @@ export default () => {
 	}
 	const ViewItem = viewType === 'table' ? TableItem : PreviewItem;
 
-	const usersList = useMemo (() => data.map((user) => {
-		return (<ViewItem
+	const usersList = useMemo (() => data.map((user) => (
+		<ViewItem
 			key={user.id}
 			user={user}
 			ageCaption={ageCaption(user.age)}
 			favouriteHandler={favouriteHandler}
 		/>
-	)}), [data, ViewItem]);
+	)), [data, ViewItem]);
 
 	useEffect(() => {
-		listObserver.observeList();
-		videoObserver.observeVideos();
-	}, [data]);
+		observeList();
+		observeVideos();
+	}, [data, observeList, observeVideos]);
 
 	return (
 		<Wrapper id='users-list'>

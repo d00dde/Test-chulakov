@@ -2,35 +2,32 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { radioChange } from '../../redux/actions';
 import { ButtonGroup, Button } from 'react-bootstrap';
+import  options  from '../../options';
 
 export default ({ langField, fieldName }) => {
-	const { activeValue, fields } = useSelector((state) => ({
+	const { activeValue, language } = useSelector((state) => ({
 			activeValue: state[fieldName],
-			fields: state.language[langField]
+			language: state.language[langField]
 		}));
 	const dispatch = useDispatch();
 
 	const setActiveValue = (fieldName, fieldValue) => dispatch(radioChange(fieldName, fieldValue));
-	const options = [];
-	for(let key in fields){
-		options.push({ title: fields[key], value: key});
-	}
+
 	const chooseButton = (e) => {
 		if(e.target.classList.contains('active'))
 			return;
 		setActiveValue(fieldName, e.target.dataset.sort);
 	};
-
-	const buttonsList = options.map(({ title, value }) => (
+	const buttonsList = options[fieldName].map((option) => (
 		<Button
-			key={value}
-			data-sort={value}
-			active={activeValue === value ? 'active' : null}
+			key={option}
+			data-sort={option}
+			active={activeValue === option ? 'active' : null}
 			size="lg"
 			className="mb-2"
 			onClick={chooseButton}
 		>
-			{title}
+			{language[option]}
 		</Button>
 		));
 	return (

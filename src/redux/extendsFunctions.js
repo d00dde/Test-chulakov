@@ -9,7 +9,7 @@
 }
 
 export const filterAndSortUsers = (state) => {
-	const { usersData, sortByField, sortDirection, filterValue } = state;
+	const { usersData, sortByFields, sortDirection, filterValue } = state;
 	let forModificate = [...usersData];
 	const normalizedFilterValue = filterValue.trim().toLowerCase();
 	if(normalizedFilterValue){
@@ -23,9 +23,9 @@ export const filterAndSortUsers = (state) => {
 			});
 		}
 		forModificate.sort((a, b) => {
-			if(a[sortByField] > b[sortByField])
+			if(a[sortByFields] > b[sortByFields])
 				return sortDirection === 'backward' ? -1 : 1;
-			if(a[sortByField] < b[sortByField])
+			if(a[sortByFields] < b[sortByFields])
 				return sortDirection === 'forward' ? -1 : 1;
 			return 0;
 		});

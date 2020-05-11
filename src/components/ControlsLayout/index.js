@@ -12,7 +12,7 @@ export default () => {
 		<Row>
 			<Col md={5}>
 				<h3>{language.sortBy}</h3>
-				<RadioBlock  fieldName='sortByField' langField='SortByFieldsSwitch'/>
+				<RadioBlock  fieldName='sortByFields' langField='SortByFieldsSwitch'/>
 				<RadioBlock  fieldName='sortDirection' langField='SortDirectionSwitch'/>
 				<NameFilter />
 			</Col>

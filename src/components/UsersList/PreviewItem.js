@@ -57,6 +57,7 @@ const Avatar = styled.img`
 `;
 const Favourite = styled.img`
 	width: 30px;
+	height: 30px;
 	cursor: pointer;
 `;
 const Phrase = styled.p`
@@ -99,7 +100,7 @@ const UserVideo = ({ video, id }) => (
 export default ({
 	user : { id, favourite, name, age, phone, image, phrase, video },
 	ageCaption,
-	favouriteHandler
+	favouriteHandler,
 }) => {
 	return(
 		<Card key={id} video={!!video}>

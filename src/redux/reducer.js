@@ -1,18 +1,21 @@
 import types from './actionTypes';
 import { rus, eng } from '../languages';
 import { filterAndSortUsers, setBrowserPath } from './extendsFunctions';
+import options from '../options';
 
 const initState = () => {
+	const { sortByFields, sortDirection, viewType } = options;
 	const isPathExist = window.location.pathname !== '/';
 	const parts = window.location.pathname.split('/');  //Неустойчиво к ошибкам в редактировании адресной строки
 	return {
 		usersData: null,
 		modifiedData: null,
+		error: null,
 		language: rus,
-		sortByField: isPathExist ? parts[1] : 'id',
-		sortDirection: isPathExist ? parts[2] : 'forward',
+		sortByField: isPathExist ? (sortByFields.includes(parts[1]) ?  parts[1] : sortByFields[0]) : sortByFields[0],
+		sortDirection: isPathExist ? (sortDirection.includes(parts[1]) ?  parts[1] : sortDirection[0]) : sortDirection[0],
 		filterValue: isPathExist ? parts[4] : '',
-		viewType: isPathExist ? parts[3] : 'table',
+		viewType: isPathExist ?  (viewType.includes(parts[1]) ?  parts[1] : viewType[0]) : viewType[0],
 	}
 }
 
@@ -23,7 +26,14 @@ export const reducer = (state = initState(), action) => {
 		case types.SET_USERS_DATA:
 			return {...state,
 				usersData: action.payload,
-				modifiedData:filterAndSortUsers({...state, usersData:action.payload})
+				modifiedData:filterAndSortUsers({...state, usersData:action.payload}),
+				error: null
+			};
+		case types.SET_ERROR:
+			return {...state,
+				usersData: null,
+				modifiedData: null,
+				error: action.payload
 			};
 		case types.CHANGE_LANGUAGE:
 			return {

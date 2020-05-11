@@ -2,11 +2,19 @@ import types from './actionTypes';
 import server from '../server';
 
 export const fetchUsersData = () => async (dispatch) => {
+	try {
 	const usersData = await server.getData();
 	dispatch ({
 		type: types.SET_USERS_DATA,
 		payload: usersData
 	});
+	}
+	catch (e) {
+		dispatch ({
+			type: types.SET_ERROR,
+			payload: e
+		});
+	}
 };
 
 export const changeLanguage = () => {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export const useListObserver = (parentId, classIntersection) => {
 	const [ observer ] = useState(() => {
@@ -13,7 +13,7 @@ export const useListObserver = (parentId, classIntersection) => {
 			threshold: 0.5
 		});
 	})
-	const observeList = () => {
+	const observeList = useCallback(() => {
 		document.getElementById(parentId).childNodes.forEach((node) => {
 			node.classList.remove(classIntersection);
 			if(node.offsetTop < window.pageYOffset + window.innerHeight && node.offsetTop > window.pageYOffset - node.offsetHeight)
@@ -22,7 +22,8 @@ export const useListObserver = (parentId, classIntersection) => {
 		document.getElementById(parentId).childNodes.forEach((node) => {
 			observer.observe(node);
 		});
-	}
+	}, [classIntersection, parentId, observer]);
+
 	return {
 		observeList,
 	}
@@ -30,16 +31,21 @@ export const useListObserver = (parentId, classIntersection) => {
 
 export const useVideoObserver = (parentId) => {
 	const [ videos, setVideos ] = useState([]);
-	console.log(videos)
-	const stopOthersVideos = (playedVideo) => {
-		console.log(videos)
+	const stopOthersVideos = useCallback((playedVideo) => {
 		videos.forEach((video) => {
-			if(video === playedVideo)
+			if(video === playedVideo){
 				return;
+			}
 			if(!video.paused)
 				video.pause();
 		});
-	}
+	}, [videos])
+
+	useEffect(() => {
+		videos.forEach((video) => {
+			video.onplay = (e) => stopOthersVideos(e.target);
+		})
+	}, [videos, stopOthersVideos]);
 
 	const [ observer ] = useState(() => {
 		return new IntersectionObserver((entries) => {
@@ -55,7 +61,7 @@ export const useVideoObserver = (parentId) => {
 		});
 	});
 
-	const observeVideos = () => {
+	const observeVideos = useCallback(() => {
 		const currentVideos = [];
 		document.getElementById(parentId).childNodes.forEach((node) => {
 			if(!node.childNodes[1])
@@ -63,12 +69,11 @@ export const useVideoObserver = (parentId) => {
 			if(node.childNodes[1].childNodes[0].tagName === 'VIDEO'){
 				const video = node.childNodes[1].childNodes[0];
 				observer.observe(video);
-				video.onplay = (video) => stopOthersVideos(video);
 				currentVideos.push(video);
 			}
 		});
 		setVideos(currentVideos);
-	}
+	}, [parentId, observer]);
 
 	return {
 		observeVideos,
