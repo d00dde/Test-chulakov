@@ -13,3 +13,4 @@ export default {
 		'preview'
 	]
 }
+export const basePath = true ? '/Test-chulakov': '';

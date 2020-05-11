@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { basePath } from '../../options';
 
 const UserRow = styled.div`
 	display: flex;
@@ -55,14 +56,14 @@ export default ({user : { id, favourite, name, age, phone, image }, ageCaption, 
 	return(
 		<UserRow key={id}>
 			<Section>
-				<Avatar src={`/images/avatars/${image}.svg`} alt={image} />
+				<Avatar src={`${basePath}/images/avatars/${image}.svg`} alt={image} />
 				<div>{name}</div>
 			</Section>
 			<AgeSection>{age} {ageCaption}</AgeSection>
 			<PhoneSection>
 				<div>{phone}</div>
 				<Favourite
-					src={favourite ? '/images/filled-star.png' : '/images/empty-star.svg'}
+					src={favourite ? `${basePath}/images/filled-star.png` : `${basePath}/images/empty-star.svg`}
 					alt='favourite'
 					onClick={() => favouriteHandler(id)}
 				/>

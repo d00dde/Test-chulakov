@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { basePath } from '../../options';
 
 const Card = styled.div`
 	width: ${props => props.video ? '100%' : '48%'};
@@ -92,7 +93,7 @@ const Video = styled.div`
 const UserVideo = ({ video, id }) => (
 	<Video data-id={id} className='video-wrapper'>
 		<video controls={true} >
-			<source src={`/videos/${video}.mp4`}></source>
+			<source src={`${basePath}/videos/${video}.mp4`}></source>
 		</video>
 	</Video>
 );
@@ -107,11 +108,11 @@ export default ({
 			<Left video={!!video}>
 				<TitleRow>
 					<NameSection md={4} sm={12}>
-						<Avatar src={`/images/avatars/${image}.svg`} alt={image} />
+						<Avatar src={`${basePath}/images/avatars/${image}.svg`} alt={image} />
 						<div>{name}</div>
 					</NameSection>
 					<Favourite
-					src={favourite ? '/images/filled-star.png' : '/images/empty-star.svg'}
+					src={favourite ? `${basePath}/images/filled-star.png` : `${basePath}/images/empty-star.svg`}
 					alt='favourite'
 					onClick={() => favouriteHandler(id)}
 					/>
