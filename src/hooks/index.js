@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export const useListObserver = (parentId, classIntersection) => {
-	const [ observer ] = useState(() => {
-		return new IntersectionObserver((entries) => {
+	const [ observer, setObserver ] = useState(null);
+	useEffect(() => {
+		const newObserver = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
 				if(entry.isIntersecting){
 					entry.target.classList.add(classIntersection);
@@ -12,8 +13,13 @@ export const useListObserver = (parentId, classIntersection) => {
 			rootMargin: '0px',
 			threshold: 0.5
 		});
-	})
+		setObserver(newObserver);
+		return () => newObserver.disconnect();
+	}, []);
+
 	const observeList = useCallback(() => {
+		if(!observer)
+			return;
 		document.getElementById(parentId).childNodes.forEach((node) => {
 			node.classList.remove(classIntersection);
 			if(node.offsetTop < window.pageYOffset + window.innerHeight && node.offsetTop > window.pageYOffset - node.offsetHeight)
@@ -30,7 +36,25 @@ export const useListObserver = (parentId, classIntersection) => {
 }
 
 export const useVideoObserver = (parentId) => {
+	const [ observer, setObserver ] = useState(null);
 	const [ videos, setVideos ] = useState([]);
+
+	useEffect(() => {
+		const newObserver = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if(entry.isIntersecting)
+					entry.target.play();
+				else
+				entry.target.pause();
+			});
+		}, {
+			rootMargin: '-45% 0% -45% 0%',
+			threshold: 0
+		});
+		setObserver(newObserver);
+		return () => newObserver.disconnect();
+	}, []);
+
 	const stopOthersVideos = useCallback((playedVideo) => {
 		videos.forEach((video) => {
 			if(video === playedVideo){
@@ -47,21 +71,9 @@ export const useVideoObserver = (parentId) => {
 		})
 	}, [videos, stopOthersVideos]);
 
-	const [ observer ] = useState(() => {
-		return new IntersectionObserver((entries) => {
-			entries.forEach((entry) => {
-				if(entry.isIntersecting)
-					entry.target.play();
-				else
-				entry.target.pause();
-			});
-		}, {
-			rootMargin: '-45% 0% -45% 0%',
-			threshold: 0
-		});
-	});
-
 	const observeVideos = useCallback(() => {
+		if(!observer)
+			return;
 		const currentVideos = [];
 		document.getElementById(parentId).childNodes.forEach((node) => {
 			if(!node.childNodes[1])
