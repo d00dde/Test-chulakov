@@ -15,16 +15,16 @@
 
 **Использованы технологии:**
 
-:wrench: базовые технологии React;
-:wrench: SPA;
-:wrench: Redux;
-:wrench: React hooks (в том числе пользовательские);
-:wrench: адаптивный дизайн (media-запросы);
-:wrench: анимация при помощи native CSS;
-:wrench: Styled Components;
-:wrench: работа с Intersection Observer;
-:wrench: работа с HTML 5 video API;
-:wrench: работа с location и history;
-:wrench: смена языка без перезагрузки страницы;
-:wrench: создание и подключение лоадеров;
-:wrench: методы обработки ошибок в приложении.
+:wrench: базовые технологии React;<br/>
+:wrench: SPA;<br/>
+:wrench: Redux;<br/>
+:wrench: React hooks (в том числе пользовательские);<br/>
+:wrench: адаптивный дизайн (media-запросы);<br/>
+:wrench: анимация при помощи native CSS;<br/>
+:wrench: Styled Components;<br/>
+:wrench: работа с Intersection Observer;<br/>
+:wrench: работа с HTML 5 video API;<br/>
+:wrench: работа с location и history;<br/>
+:wrench: смена языка без перезагрузки страницы;<br/>
+:wrench: создание и подключение лоадеров;<br/>
+:wrench: методы обработки ошибок в приложении.<br/>
